@@ -1,6 +1,6 @@
-from fastapi import FastApi, status
+from fastapi import FastAPI, status
 
-app = FastApi()
+app = FastAPI()
 
 @app.get('/', status_code=status.HTTP_201_CREATED)
 def root():
