@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  service_1:
+    build:
+      context: ./service_1
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
