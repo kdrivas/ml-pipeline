@@ -14,8 +14,6 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: data:1:1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 
   kafka-ui:
     image: provectuslabs/kafka-ui
@@ -44,14 +42,27 @@ services:
       - kafka
       - zookeeper
 
-  frontend:
+  consumer:
     build:
-      context: ./frontend
+      context: ./consumer
       dockerfile: Dockerfile
-    ports:
-      - 3000:3000
+    environment:
+      KAFKA_SERVER: kafka
+      KAFKA_PORT: 9092
+      KAFKA_TOPIC: data
     depends_on:
+      - kafka
+      - zookeeper
       - model_1
+
+  #frontend:
+  #  build:
+  #    context: ./frontend
+  #    dockerfile: Dockerfile
+  #  ports:
+  #    - 3000:3000
+  #  depends_on:
+  #    - model_1
 
   nginx:
     image: nginx:latest
