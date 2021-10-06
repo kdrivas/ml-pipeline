@@ -6,6 +6,9 @@ class PredictionBase(BaseModel):
   credit_score_3: float
   credit_score_4: float
 
+class PredictionCreate(PredictionBase):
+  pass
+
 class Prediction(PredictionBase):
   id: int
 

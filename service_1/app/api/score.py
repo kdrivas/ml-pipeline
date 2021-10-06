@@ -32,10 +32,10 @@ def root():
   return {'message': 'Hello from score route'}
 
 @router.post('/send_data_1', status_code=status.HTTP_201_CREATED)
-async def send_data(sepal_length: str = Form(...), 
-                    petal_length: str = Form(...),
-                    sepal_width: str = Form(...),
-                    petal_width: str = Form(...)):
+async def send_data(credit_score_1: str = Form(...), 
+                    credit_score_2: str = Form(...),
+                    credit_score_3: str = Form(...),
+                    credit_score_4: str = Form(...)):
   
   kafka_producer.send(KAFKA_TOPIC, {'credit_score_1': float(sepal_length), 
                                     'credit_score_2': float(sepal_width), 
