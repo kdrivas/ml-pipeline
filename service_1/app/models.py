@@ -1,5 +1,5 @@
 from enum import Flag
-from sqlalchemy import Column, Integer, Float
+from sqlalchemy import Column, Integer, Float, Integer
 
 from .database import Base
 
@@ -11,3 +11,4 @@ class Prediction(Base):
   credit_score_2 = Column(Float)
   credit_score_3 = Column(Float)
   credit_score_4 = Column(Float)
+  pred = Column(Integer)

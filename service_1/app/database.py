@@ -2,9 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_CONNECTION = ''
+import os
 
-engine = create_engine(DATABASE_CONNECTION)
+DATABASE_CONN = os.getenv('DATABASE_CONN', '')
+
+engine = create_engine(DATABASE_CONN)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

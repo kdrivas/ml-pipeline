@@ -5,6 +5,7 @@ class PredictionBase(BaseModel):
   credit_score_2: float
   credit_score_3: float
   credit_score_4: float
+  pred: int
 
 class PredictionCreate(PredictionBase):
   pass
