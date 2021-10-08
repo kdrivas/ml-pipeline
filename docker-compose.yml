@@ -51,6 +51,7 @@ services:
     depends_on:
       - kafka
       - zookeeper
+      - db
 
   consumer:
     build:

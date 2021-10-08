@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <iframe id="iframe" name="my_iframe" className="frame"></iframe>
       <h1>Form Iris Setosa</h1>
-      <form action="http://localhost:8090/send_data_1" method="post" target="my_iframe" onSubmit={handleSubmit}>
+      <form action="http://localhost:8090/scores/send_data_1" method="post" target="my_iframe" onSubmit={handleSubmit}>
         <label>Sepal length: </label>
         <input name="credit_score_1" type="text"></input>
         <br/>

@@ -1,5 +1,9 @@
-from fastapi import APIRouter, Form, status
+from fastapi import APIRouter, Form, status, Depends
 from kafka import KafkaProducer
+
+from app.crud import create_record
+from app.schemas import PredictionCreate
+from .deps import get_session
 
 import os
 import json
@@ -27,7 +31,7 @@ router = APIRouter(
   tags=["scores"],
 )
 
-@router.app('/')
+@router.get('/')
 def root():
   return {'message': 'Hello from score route'}
 
@@ -35,15 +39,23 @@ def root():
 async def send_data(credit_score_1: str = Form(...), 
                     credit_score_2: str = Form(...),
                     credit_score_3: str = Form(...),
-                    credit_score_4: str = Form(...)):
+                    credit_score_4: str = Form(...),
+                    db = Depends(get_session)):
   
-  kafka_producer.send(KAFKA_TOPIC, {'credit_score_1': float(sepal_length), 
-                                    'credit_score_2': float(sepal_width), 
-                                    'credit_score_3': float(petal_length), 
-                                    'credit_score_4': float(petal_width),
+  kafka_producer.send(KAFKA_TOPIC, {'credit_score_1': float(credit_score_1), 
+                                    'credit_score_2': float(credit_score_2), 
+                                    'credit_score_3': float(credit_score_3), 
+                                    'credit_score_4': float(credit_score_4),
                                     'score': 1})
   kafka_producer.flush()
 
+  item = PredictionCreate(credit_score_1 = credit_score_1, 
+                          credit_score_2 = credit_score_2, 
+                          credit_score_3 = credit_score_3, 
+                          credit_score_4 = credit_score_4, 
+                          pred = 0)
+  new_item = create_record(db, item)
+  print(new_item)
   return {'S': 'clase'} 
 
 @router.get('/get_dummy', status_code=status.HTTP_200_OK)

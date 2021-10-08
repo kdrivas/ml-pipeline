@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from . import models
+from . import schemas
 
 def create_record(db: Session, item: schemas.PredictionCreate):
   db_item = models.Prediction(**item)

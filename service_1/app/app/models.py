@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, Float, Integer
 from .database import Base
 
 class Prediction(Base):
-  __table_name__ = "predictions"
+  __tablename__ = "predictions"
 
   id = Column(Integer, primary_key=True, index=True)
   credit_score_1 = Column(Float)
