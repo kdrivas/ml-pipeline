@@ -4,7 +4,7 @@ from . import models
 from . import schemas
 
 def create_record(db: Session, item: schemas.PredictionCreate):
-  db_item = models.Prediction(**item)
+  db_item = models.Prediction(**item.dict())
   db.add(db_item)
   db.commit()
   db.refresh(db_item)
