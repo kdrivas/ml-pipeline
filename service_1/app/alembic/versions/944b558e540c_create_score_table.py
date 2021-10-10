@@ -19,7 +19,8 @@ depends_on = None
 
 def upgrade():
   op.create_table('predictions', 
-      sa.Column('credit_score_1', sa.Integer, index=True, primary_key=True),
+      sa.Column('id', sa.Integer, index=True, primary_key=True),
+      sa.Column('credit_score_1', sa.Float, nullable=False),
       sa.Column('credit_score_2', sa.Float, nullable=False),
       sa.Column('credit_score_3', sa.Float, nullable=False),
       sa.Column('credit_score_4', sa.Float, nullable=False),
