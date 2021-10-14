@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Form, status, Depends
 from kafka import KafkaProducer
+from joblib import load
 
 from app.crud import create_record
 from app.schemas import PredictionCreate
@@ -8,6 +9,8 @@ from .deps import get_session
 import os
 import json
 import time
+
+pipeline = load('pipeline.joblib')
 
 KAFKA_SERVER = os.getenv('KAFKA_SERVER')
 KAFKA_PORT = os.getenv('KAFKA_PORT')
@@ -49,11 +52,12 @@ async def send_data(credit_score_1: str = Form(...),
                                     'score': 1})
   kafka_producer.flush()
 
+  pred = pipeline.predict([[credit_score_1, credit_score_2, credit_score_3, credit_score_4]])
   item = PredictionCreate(credit_score_1 = credit_score_1, 
                           credit_score_2 = credit_score_2, 
                           credit_score_3 = credit_score_3, 
                           credit_score_4 = credit_score_4, 
-                          pred = 0)
+                          pred = pred)
   new_item = create_record(db, item)
   print(new_item)
   return {'S': 'clase'} 
