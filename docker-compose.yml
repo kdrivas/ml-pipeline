@@ -81,14 +81,14 @@ services:
       - zookeeper
       - model_1
 
-  #frontend:
-  #  build:
-  #    context: ./frontend
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - 3000:3000
-  #  depends_on:
-  #    - model_1
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - model_1
 
   nginx:
     image: nginx:latest
