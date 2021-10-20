@@ -1,6 +1,10 @@
 # ml-pipeline
 
+## Architecture
+
 <img src="docs/architecture.png">
+
+## Directory tree
 
 ```
 .
@@ -42,5 +46,11 @@
 │   │   └── pipeline.joblib              # Sklearn prediction pipeline
 │   ├── Dockerfile
 └── └── requirements.txt
+```
 
+## Execution
+
+```
+docker-compose build
+docker-compose up
 ```
