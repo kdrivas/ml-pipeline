@@ -4,3 +4,5 @@ python-multipart
 kafka-python
 alembic
 psycopg2
+joblib
+scikit-learn

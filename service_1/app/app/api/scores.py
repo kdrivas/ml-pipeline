@@ -44,13 +44,6 @@ async def send_data(credit_score_1: str = Form(...),
                     credit_score_3: str = Form(...),
                     credit_score_4: str = Form(...),
                     db = Depends(get_session)):
-  
-  kafka_producer.send(KAFKA_TOPIC, {'credit_score_1': float(credit_score_1), 
-                                    'credit_score_2': float(credit_score_2), 
-                                    'credit_score_3': float(credit_score_3), 
-                                    'credit_score_4': float(credit_score_4),
-                                    'score': 1})
-  kafka_producer.flush()
 
   pred = pipeline.predict([[credit_score_1, credit_score_2, credit_score_3, credit_score_4]])
   item = PredictionCreate(credit_score_1 = credit_score_1, 
@@ -59,6 +52,14 @@ async def send_data(credit_score_1: str = Form(...),
                           credit_score_4 = credit_score_4, 
                           pred = pred)
   new_item = create_record(db, item)
+
+  kafka_producer.send(KAFKA_TOPIC, {'credit_score_1': float(credit_score_1), 
+                                    'credit_score_2': float(credit_score_2), 
+                                    'credit_score_3': float(credit_score_3), 
+                                    'credit_score_4': float(credit_score_4),
+                                    'score': int(pred)})
+  kafka_producer.flush()
+
   print(new_item)
   return {'S': 'clase'} 
 
